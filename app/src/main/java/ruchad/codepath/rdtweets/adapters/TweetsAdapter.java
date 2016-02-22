@@ -76,18 +76,21 @@ public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         ImageView ivEntity = viewHolder.ivEntity;
         VideoView vvVideo = viewHolder.vvVideo;
         ivEntity.setImageResource(0);
-        vvVideo.setVisibility(View.GONE);
         if(tweet.extended_entities!=null && tweet.extended_entities.media!=null) {
             Tweet.ExtendedEntitiesEntity.MediaEntity media = tweet.extended_entities.media.get(0);
             String type = media.type;
             int width = media.sizes.medium.w;
             int height = media.sizes.medium.h;
-            if(type.equalsIgnoreCase("photo")) {
-                Glide.with(viewHolder.ivEntity.getContext()).load(media.media_url).override(width, height).into(ivEntity);
-            }else{
-                vvVideo.setVideoURI(Uri.parse(media.media_url));
-                vvVideo.setMediaController(new MediaController(vvVideo.getContext()));
+            if(media.video_info!=null && media.video_info.variants!=null){
+                vvVideo.setVideoURI(Uri.parse(media.video_info.variants.get(0).url));
+                vvVideo.setZOrderOnTop(true);
+                MediaController mediaController = new MediaController(vvVideo.getContext());
+                mediaController.setAnchorView(vvVideo);
+                vvVideo.setMediaController(mediaController);
+                vvVideo.requestFocus();
                 vvVideo.start();
+            }else if(type.equalsIgnoreCase("photo") || type.equalsIgnoreCase("animated_gif")) {
+                Glide.with(viewHolder.ivEntity.getContext()).load(media.media_url).override(width, height).into(ivEntity);
             }
         }
 

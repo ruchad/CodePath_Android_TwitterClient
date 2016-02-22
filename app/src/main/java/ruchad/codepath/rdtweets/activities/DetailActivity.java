@@ -12,16 +12,15 @@ import org.parceler.Parcels;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import ruchad.codepath.rdtweets.R;
+import ruchad.codepath.rdtweets.fragments.ComposeFragment;
 import ruchad.codepath.rdtweets.models.Tweet;
 import ruchad.codepath.rdtweets.restclient.TwitterClient;
 
@@ -63,20 +62,18 @@ public class DetailActivity extends AppCompatActivity {
             Glide.with(getApplicationContext()).load(tweet.extended_entities.media.get(0).media_url).into(ivDetailImg);
         tvCreationTime.setText(tweet.created_at);
         etReplyToTweet.setHint(" Reply to " + tweet.user.name);
-        etReplyToTweet.setOnKeyListener(new View.OnKeyListener() {
-            //Post reply when user presses enter
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    Tweet tweet1 = new Tweet();
-                    tweet1.text = etReplyToTweet.getText().toString();
-                    tweet1.in_reply_to_screen_name = tweet.user.screen_name;
-                    tweet1.user = mUser;
-                    tweet1.created_at = String.valueOf(System.currentTimeMillis());
-                    postTweet(tweet1);
-                    Toast.makeText(getApplicationContext(), "Replied to " + tweet.user.screen_name, Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-                return false;
+        etReplyToTweet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ComposeFragment composeFragment = ComposeFragment.getInstance("Compose Tweet");
+                composeFragment.show(getFragmentManager(), "fragment_compose_tweet");
+                composeFragment.setListener(new ComposeFragment.ComposeFragmentListener() {
+                    @Override
+                    public void onPostTweet(Tweet postTweet) {
+                        postTweet.in_reply_to_status_id = tweet.id_str;
+                        postTweet(postTweet);
+                    }
+                });
             }
         });
     }

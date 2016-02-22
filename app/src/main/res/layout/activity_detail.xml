@@ -61,7 +61,7 @@
         android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDetailTweet"
+        android:layout_below="@+id/ivDetailImg"
         android:layout_alignParentLeft="true"/>
 
     <LinearLayout
@@ -120,6 +120,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/etReplyToTweet"
+        android:hint="What's happening?"
         android:background="@drawable/border"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"

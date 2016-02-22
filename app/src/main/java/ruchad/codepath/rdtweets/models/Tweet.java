@@ -37,8 +37,8 @@ public class Tweet extends Model{
     public boolean favorited;
     @Column(name="retweeted")
     public boolean retweeted;
-    @Column(name="in_reply_to_screen_name")
-    public String in_reply_to_screen_name;
+    @Column(name="in_reply_to_status_id")
+    public String in_reply_to_status_id;
 
     @Parcel(analyze = UserEntity.class)
     @Table(name="UserEntity")
@@ -81,6 +81,8 @@ public class Tweet extends Model{
             public String type;
             @Column(name="SizesEntity",onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
             public SizesEntity sizes;
+            @Column(name="videoInfo",onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
+            public VideoInfoEntity video_info;
 
             @Parcel(analyze = SizesEntity.class)
             @Table(name="SizesEntity")
@@ -100,6 +102,26 @@ public class Tweet extends Model{
                     public int h;
                     @Column(name="resize")
                     public String resize;
+                }
+            }
+
+            @Parcel(analyze = VideoInfoEntity.class)
+            @Table(name="VideoInfoEntity")
+            public static class VideoInfoEntity extends Model{
+                @Column(name = "aspect_ratio")
+                public List<Integer> aspect_ratio;
+                @Column(name="variants")
+                public List<VariantsEntity> variants;
+
+                @Parcel(analyze = VariantsEntity.class)
+                @Table(name="VariantsEntity")
+                public static class VariantsEntity extends Model{
+                    @Column(name="bitrate")
+                    public int bitrate;
+                    @Column(name="contentType")
+                    public String content_type;
+                    @Column(name="url")
+                    public String url;
                 }
             }
         }
