@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Simple Tweets</string>
+    <string name="action_settings">About</string>
+    <string name="login_label">Connect To Twitter</string>
+    <string name="title_activity_timeline">TimelineActivity</string>
+    <string name="action_notification">action_notification</string>
+</resources>

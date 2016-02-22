@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="ruchad.codepath.rdtweets.activities.DetailActivity">
+
+    <ImageView
+        android:id="@+id/ivUserDetailPic"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/tvUserDetailName"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:drawableRight="@android:drawable/ic_lock_idle_lock"
+        android:layout_alignTop="@+id/ivUserPic"
+        android:layout_toRightOf="@+id/ivUserDetailPic"
+        android:layout_toEndOf="@+id/ivUserDetailPic" />
+
+    <TextView
+        android:id="@+id/tvUserDetailHandle"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvUserDetailName"
+        android:layout_toRightOf="@+id/ivUserDetailPic"
+        android:layout_toEndOf="@+id/ivUserDetailPic" />
+
+    <TextView
+        android:id="@+id/tvDetailTweet"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvUserDetailHandle"/>
+
+    <ImageView
+        android:id="@+id/ivDetailImg"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tvDetailTweet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvDetailCreationTime"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvDetailTweet"
+        android:layout_alignParentLeft="true"/>
+
+    <LinearLayout
+        android:id="@+id/llIcons"
+        android:layout_below="@+id/tvDetailCreationTime"
+        android:background="@drawable/border"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivReply"
+            android:src="@drawable/ic_reply_default"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <ImageView
+            android:id="@+id/ivRetweet"
+            android:src="@drawable/ic_retweet_default"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <ImageView
+            android:id="@+id/ivFavorite"
+            android:src="@drawable/ic_like_default"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <ImageView
+            android:id="@+id/ivShare"
+            android:src="@android:drawable/ic_menu_share"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <ImageView
+            android:id="@+id/ivDelete"
+            android:src="@android:drawable/ic_menu_delete"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/etReplyToTweet"
+        android:background="@drawable/border"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
