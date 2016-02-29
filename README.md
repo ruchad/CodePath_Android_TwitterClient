@@ -45,7 +45,10 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented usersList stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/ruchad/CodePath_TwitterClient/blob/master/TwitterClient_ViewPager.gif' title='Video Walkthrough' />
+<img src='https://github.com/ruchad/CodePath_TwitterClient/blob/master/TwitterClient_UserProfile.gif' title='Video Walkthrough2'/>
+<img src='https://github.com/ruchad/CodePath_TwitterClient/blob/master/TwitterClient_Search.gif' title='Video Walkthrough3'/>
+<img src='https://github.com/ruchad/CodePath_TwitterClient/blob/master/TwitterClient_Retweet.gif' title='Video Walkthrough4'/>
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

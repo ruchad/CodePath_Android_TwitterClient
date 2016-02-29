@@ -159,7 +159,7 @@ public class ProfileActivity extends AppCompatActivity {
                 tvFollowing.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent();
+                        Intent intent = new Intent(getApplicationContext(), UserListActivity.class);
                         intent.putExtra("type", "Following");
                         intent.putExtra("screen_name", mUser.screen_name);
                         startActivity(intent);
@@ -170,7 +170,7 @@ public class ProfileActivity extends AppCompatActivity {
                 tvFollowers.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent();
+                        Intent intent = new Intent(getApplicationContext(), UserListActivity.class);
                         intent.putExtra("type", "Followers");
                         intent.putExtra("screen_name", mUser.screen_name);
                         startActivity(intent);

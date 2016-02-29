@@ -8,6 +8,7 @@ import com.loopj.android.http.TextHttpResponseHandler;
 import org.apache.http.Header;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,13 +39,20 @@ public class MentionsTimelineFragment extends TimelineFragment {
 
         fabCompose.setVisibility(View.INVISIBLE);
 
-        swipeContainer.setRefreshing(false);
+        //pull to refresh
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                populateTimeline(-1);
+                swipeContainer.setRefreshing(false);
+            }
+        });
 
         //recycler view
         rvTweets.addOnScrollListener(new EndlessRecyclerViewScrollListener(mLinearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                populateTimeline(Long.parseLong(getTweet(getTweetsCount() - 1).id_str));
+                populateTimeline(Long.parseLong(getTweet(getTweetsCount()-1).id_str));
             }
         });
 
