@@ -35,7 +35,7 @@ The following **bonus** features are implemented:
 
 * [x] Use Parcelable instead of Serializable using the popular [Parceler library](http://guides.codepath.com/android/Using-Parceler).
 * [x] Apply the popular [Butterknife annotation library](http://guides.codepath.com/android/Reducing-View-Boilerplate-with-Butterknife) to reduce view boilerplate.
-* [x] User can view their direct messages (or send new ones)
+* [] User can view their direct messages (or send new ones)
 
 The following **additional** features are implemented:
 
