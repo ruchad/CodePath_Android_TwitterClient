@@ -8,7 +8,7 @@ import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.apache.http.Header;
 
-import android.app.DialogFragment;
+import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -34,6 +34,7 @@ public class ComposeFragment extends DialogFragment{
 
     @Bind(R.id.ivClose) ImageView ivClose;
     @Bind(R.id.ivUserPic) ImageView ivUserPic;
+    @Bind(R.id.tvInReplyTo)TextView tvInReplyTo;
     @Bind(R.id.etComposeTweet) EditText etComposeTweet;
     @Bind(R.id.tvCharCount) TextView tvCharCount;
     @Bind(R.id.btnTweet) Button btnTweet;
@@ -49,9 +50,12 @@ public class ComposeFragment extends DialogFragment{
         this.listener=null;
     }
 
-    //private ComposeFragment mComposeFragment;
-    public static ComposeFragment getInstance(String title){
-        return new ComposeFragment();
+    public static ComposeFragment getInstance(String inReplyTo){
+        ComposeFragment composeFragment = new ComposeFragment();
+        Bundle args = new Bundle();
+        args.putString("in_reply_to", inReplyTo);
+        composeFragment.setArguments(args);
+        return composeFragment;
     }
 
     public void setListener(ComposeFragmentListener listener) {
@@ -63,6 +67,10 @@ public class ComposeFragment extends DialogFragment{
         View view = inflater.inflate(R.layout.fragment_compose, container);
         ButterKnife.bind(this, view);
         mTwitterClient = TwitterApplication.getRestClient();
+        if(getArguments().getString("in_reply_to").isEmpty())tvInReplyTo.setVisibility(View.INVISIBLE);
+        else {
+            tvInReplyTo.setText("Reply: @" + getArguments().getString("in_reply_to"));
+        }
         etComposeTweet.addTextChangedListener(mTextWatcher);
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,11 +97,10 @@ public class ComposeFragment extends DialogFragment{
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         getUserInformation();
-
     }
 
     private void getUserInformation(){
-        mTwitterClient.getVerifyCredentails(new TextHttpResponseHandler() {
+        mTwitterClient.getCurrentUserInfo(new TextHttpResponseHandler() {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {

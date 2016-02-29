@@ -11,16 +11,25 @@
     <style name="AppTheme.ActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid">
         <item name="android:background">@color/colorPrimary</item>
         <item name="background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/twitterColor</item>
+        <item name="android:textColorPrimary">@color/twitterColor</item>
         <item name="android:textColorSecondary">@color/twitterColor</item>
     </style>
 
-    <!--<style name="AppTheme.NoActionBar">-->
-        <!--<item name="windowActionBar">false</item>-->
-        <!--<item name="windowNoTitle">true</item>-->
-    <!--</style>-->
 
-    <!--<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
+    <!--UsersList Profile Theme-->
+    <style name="UserProfileTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/twitterColor</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:actionBarStyle">@style/UserProfileTheme.ActionBar</item>
+    </style>
 
-    <!--<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
-
+    <style name="UserProfileTheme.ActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="android:background">@color/twitterColor</item>
+        <item name="background">@color/twitterColor</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
 </resources>

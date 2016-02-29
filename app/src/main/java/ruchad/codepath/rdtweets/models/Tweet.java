@@ -56,6 +56,12 @@ public class Tweet extends Model{
         public String profile_image_url;
         @Column(name="notifications")
         public boolean notifications;
+        @Column(name = "followers_count")
+        public int followers_count;
+        @Column(name = "friends_count")
+        public int friends_count;
+        @Column(name="description")
+        public String description;
     }
 
     @Parcel(analyze = ExtendedEntitiesEntity.class)

@@ -6,8 +6,8 @@
 
     <ImageView
         android:src="@android:drawable/ic_menu_share"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:id="@+id/ivProfilePic"
         android:layout_alignParentRight="false"
         android:layout_alignParentEnd="false"
@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/tvRetweeted"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_retweet_default"
         android:layout_toRightOf="@+id/ivProfilePic"
@@ -27,14 +27,13 @@
     <TextView
         android:id="@+id/tvUsername"
         android:hint="Username"
+        android:layout_below="@+id/tvRetweeted"
         android:textAppearance="?android:textAppearanceSmall"
         android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ivProfilePic"
-        android:layout_toEndOf="@+id/ivProfilePic"
-        android:layout_below="@+id/tvRetweeted"/>
+        android:layout_toEndOf="@+id/ivProfilePic" />
 
     <TextView
         android:hint="Userhandle"
@@ -43,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvUserHandle"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/tvRetweeted"
         android:layout_toRightOf="@+id/tvUsername"
         android:layout_toEndOf="@+id/tvUsername" />
 
@@ -53,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvCreationTime"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/tvRetweeted"
         android:layout_alignParentRight="true" />
 
     <TextView

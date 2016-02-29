@@ -1,19 +1,25 @@
 package ruchad.codepath.rdtweets.adapters;
 
 import com.bumptech.glide.Glide;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.TextHttpResponseHandler;
 
+import org.apache.http.Header;
 import org.parceler.Parcels;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import java.util.List;
@@ -21,6 +27,8 @@ import java.util.List;
 import butterknife.ButterKnife;
 import ruchad.codepath.rdtweets.R;
 import ruchad.codepath.rdtweets.activities.DetailActivity;
+import ruchad.codepath.rdtweets.activities.ProfileActivity;
+import ruchad.codepath.rdtweets.application.TwitterApplication;
 import ruchad.codepath.rdtweets.models.Tweet;
 
 public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -95,7 +103,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         //Reply
-        //TextView tvReply = viewHolder.tvReply;
+        TextView tvReply = viewHolder.tvReply;
 
         //Retweet
         TextView tvRetweets = viewHolder.tvRetweets;
@@ -112,7 +120,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     //View Holder for tweets
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder{
         public ImageView ivProfilePic;
         public TextView tvRetweeted;
         public TextView tvUsername;
@@ -121,16 +129,24 @@ public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public TextView tvTweet;
         public ImageView ivEntity;
         public VideoView vvVideo;
-        //private TextView tvReply;
+        private TextView tvReply;
         private TextView tvRetweets;
         private TextView tvLikes;
         private Context context;
 
 
-        public ViewHolder(Context context, View itemView){
+        public ViewHolder(final Context context, final View itemView){
             super(itemView);
             this.context = context;
             ivProfilePic = ButterKnife.findById(itemView, R.id.ivProfilePic);
+            ivProfilePic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), ProfileActivity.class);
+                    intent.putExtra("screen_name", tvUserHandle.getText());
+                    v.getContext().startActivity(intent);
+                }
+            });
             tvRetweeted = ButterKnife.findById(itemView, R.id.tvRetweeted);
             tvUsername = ButterKnife.findById(itemView, R.id.tvUsername);
             tvUserHandle = ButterKnife.findById(itemView, R.id.tvUserHandle);
@@ -138,24 +154,74 @@ public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             tvTweet = ButterKnife.findById(itemView, R.id.tvTweetText);
             ivEntity = ButterKnife.findById(itemView, R.id.ivTweetEntity);
             vvVideo = ButterKnife.findById(itemView, R.id.vvTweetVideo);
-            //tvReply = ButterKnife.findById(itemView, R.id.tvReply);
+            tvReply = ButterKnife.findById(itemView, R.id.tvReply);
             tvRetweets = ButterKnife.findById(itemView, R.id.tvRetweet);
-            tvLikes = ButterKnife.findById(itemView, R.id.tvLike);
-            itemView.setOnClickListener(this);
-        }
 
-        /**
-         * OnClick listener for list item click action
-         * @param v
-         */
-        @Override
-        public void onClick(View v) {
-            int position = getLayoutPosition();
-            Tweet tweet = tweets.get(position);
-            Intent intent = new Intent(v.getContext(), DetailActivity.class);
-            intent.putExtra("tweet", Parcels.wrap(tweet));
-            v.getContext().startActivity(intent);
-            //Toast.makeText(context, tweet.text, Toast.LENGTH_LONG).show();
+
+            //ToDo: Handle response!
+            tvRetweets.setOnClickListener(new View.OnClickListener() {
+                @Override
+                @TargetApi(17)
+                public void onClick(View v) {
+                    int position = getLayoutPosition();
+                    Tweet tweet = tweets.get(position);
+                    TwitterApplication.getRestClient().retweet(new TextHttpResponseHandler() {
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                            Log.d("RDTweets", "Retweet failure: " + responseString);
+                        }
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                            Log.d("RDTweets", "Successfully retweeted");
+                            tvRetweets.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_retweet_pressed, 0, 0, 0);
+                            Toast.makeText(context, "Successfully retweeted!", Toast.LENGTH_SHORT).show();
+                        }
+                    },tweet.id_str);
+                }
+            });
+
+
+            //ToDo: Handle response!
+            tvLikes = ButterKnife.findById(itemView, R.id.tvLike);
+            tvLikes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                @TargetApi(17)
+                public void onClick(View v) {
+                    int position = getLayoutPosition();
+                    Tweet tweet = tweets.get(position);
+                    TwitterApplication.getRestClient().favorite(new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                            Log.d("RDTweets", "Successfully favorited");
+                            Toast.makeText(context, "Successfully liked!", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        }
+                    }, tweet.id_str, tweet.favorited);
+                    if(tweet.favorited == false)
+                        tvLikes.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_like_on, 0, 0, 0);
+                }
+            });
+
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getLayoutPosition();
+                    Tweet tweet = tweets.get(position);
+                    Intent intent = new Intent(v.getContext(), DetailActivity.class);
+                    intent.putExtra("tweet", Parcels.wrap(tweet));
+                    v.getContext().startActivity(intent);
+                }
+            });
         }
+    }
+
+
+    public void addAll(List<Tweet> input){
+        tweets.addAll(input);
     }
 }

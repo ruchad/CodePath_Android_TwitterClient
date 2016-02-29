@@ -34,8 +34,13 @@
         </activity>
         <activity
             android:name=".activities.TimelineActivity"
-            android:theme="@style/AppTheme"></activity>
-        <activity android:name=".activities.DetailActivity"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activities.DetailActivity" />
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:theme="@style/UserProfileTheme" />
+        <activity android:name=".activities.UserListActivity" />
+        <activity android:name=".activities.SearchActivity"></activity>
     </application>
 
 </manifest>

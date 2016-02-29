@@ -1,8 +1,5 @@
 package ruchad.codepath.rdtweets.activities;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import com.bumptech.glide.Glide;
 import com.loopj.android.http.TextHttpResponseHandler;
 
@@ -41,7 +38,6 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         mTwitterClient = new TwitterClient(this);
-        getCurrentUser();
 
         //action bar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -62,11 +58,12 @@ public class DetailActivity extends AppCompatActivity {
             Glide.with(getApplicationContext()).load(tweet.extended_entities.media.get(0).media_url).into(ivDetailImg);
         tvCreationTime.setText(tweet.created_at);
         etReplyToTweet.setHint(" Reply to " + tweet.user.name);
+
         etReplyToTweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ComposeFragment composeFragment = ComposeFragment.getInstance("Compose Tweet");
-                composeFragment.show(getFragmentManager(), "fragment_compose_tweet");
+                ComposeFragment composeFragment = ComposeFragment.getInstance(tweet.user.screen_name);
+                composeFragment.show(getSupportFragmentManager(), "fragment_compose_tweet");
                 composeFragment.setListener(new ComposeFragment.ComposeFragmentListener() {
                     @Override
                     public void onPostTweet(Tweet postTweet) {
@@ -74,21 +71,6 @@ public class DetailActivity extends AppCompatActivity {
                         postTweet(postTweet);
                     }
                 });
-            }
-        });
-    }
-
-    private void getCurrentUser(){
-        mTwitterClient.getVerifyCredentails(new TextHttpResponseHandler() {
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("RDTweets", "Cannot get user details");
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                Gson gson = new GsonBuilder().create();
-                mUser = gson.fromJson(responseString, Tweet.UserEntity.class);
             }
         });
     }

@@ -2,13 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:title="Search"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.support.v7.widget.SearchView"/>
+
     <item
         android:id="@+id/action_notifications"
-        android:icon="@drawable/ic_bell_blue"
+        android:icon="@drawable/ic_notification"
         android:title="@string/action_notification"
         app:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/action_about"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
+    <item android:id="@+id/mnuProfile"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/action_profile"
+        android:onClick="onProfileView"
+        app:showAsAction="ifRoom"/>
 </menu>
